@@ -1,0 +1,30 @@
+{
+  "name": "ds-heightmap",
+  "version": "0.1.0",
+  "description": "Use diamond-square algorithm to generate heightmaps.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fralonra/ds-heightmap.git"
+  },
+  "keywords": [
+    "diamond-square",
+    "heightmap"
+  ],
+  "author": "zoron (https://github.com/fralonra/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fralonra/ds-heightmap/issues"
+  },
+  "homepage": "https://github.com/fralonra/ds-heightmap#readme",
+  "devDependencies": {
+    "jest": "^22.4.3"
+  },
+  "dependencies": {
+    "jimp": "^0.2.28"
+  }
+}
