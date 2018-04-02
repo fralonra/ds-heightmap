@@ -1,11 +1,15 @@
 {
   "name": "ds-heightmap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use diamond-square algorithm to generate heightmaps.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "jest"
+    "test": "jest",
+    "umd": "NODE_ENV=development browserify index.js -t envify -o ds-heightmap.js",
+    "umd-min": "NODE_ENV=production browserify index.js -t envify -t babelify --presets [ env react ] -t uglifyify -o | uglifyjs --compress unused,dead_code -o ds-heightmap.min.js",
+    "build": "npm run umd && npm run umd-min",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -22,9 +26,13 @@
   },
   "homepage": "https://github.com/fralonra/ds-heightmap#readme",
   "devDependencies": {
-    "jest": "^22.4.3"
-  },
-  "dependencies": {
-    "jimp": "^0.2.28"
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^16.1.1",
+    "envify": "^4.1.0",
+    "jest": "^22.4.3",
+    "uglify-js": "^3.3.18",
+    "uglifyify": "^4.0.5"
   }
 }

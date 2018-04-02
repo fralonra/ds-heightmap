@@ -14,7 +14,7 @@ function fillArray(size, data) {
 }
 
 function makeValInRange(val, m1, m2) {
-  let min, mix;
+  let min, max;
   if (m1 <= m2) {
     min = m1;
     max = m2;

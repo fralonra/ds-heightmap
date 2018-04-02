@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+ds-heightmap.js
+ds-heightmap.min.js

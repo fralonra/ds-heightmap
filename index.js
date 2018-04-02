@@ -8,25 +8,29 @@ const POWER_MIN = 2,
       POWER_MAX = 12,
       SMOOTH_MAX = 3;
 
+const POWER_DEFAULT = 7,
+      CORNER_DEFAULT = [1, 1, 1, 1],
+      OFFSET_DEFAULT = -0.2,
+      RANGE_DEFAULT = 7,
+      ROUGH_DEFAULT = 0.8,
+      SMOOTH_DEFAULT = 3;
+
 const _data = [];
 const _corners = [];
-let _power,
-    _corner,
-    _offset,
-    _range,
-    _rough,
-    _seed,
-    _smooth,
-    _max,
-    _initialAverage;
+let _power = POWER_DEFAULT,
+    _corner = CORNER_DEFAULT,
+    _offset = OFFSET_DEFAULT,
+    _range = RANGE_DEFAULT,
+    _rough = ROUGH_DEFAULT,
+    _smooth = SMOOTH_DEFAULT,
+    _max = 0,
+    _initialAverage = 0;
 
 const ds = {
+
   init (power, opt = {}) {
-
     initVar(power, opt);
-
     initData();
-
   },
 
   run () {
@@ -70,11 +74,10 @@ function initVar(p, opt) {
     n;
   _max = Math.pow(2, _power) + 1;
 
-  _offset = typeof opt.offset === 'number' ? makeValInRange(opt.offset, -1, 1) : -0.2;
-  _range = typeof opt.range === 'number' ? makeValInRange(opt.range, 1, 10) : 7;
-  _rough = typeof opt.rough === 'number' ? makeValInRange(opt.rough, 0, 0.9) : 0.8;
-  _seed = opt.seed || new Date();
-  _smooth = typeof opt.smooth === 'number' ? makeValInRange(opt.smooth, 0, SMOOTH_MAX) : 3;
+  _offset = typeof opt.offset === 'number' ? makeValInRange(opt.offset, -1, 1) : _offset;
+  _range = typeof opt.range === 'number' ? makeValInRange(opt.range, 1, 10) : _range;
+  _rough = typeof opt.rough === 'number' ? makeValInRange(opt.rough, 0, 0.9) : _rough;
+  _smooth = typeof opt.smooth === 'number' ? makeValInRange(opt.smooth, 0, SMOOTH_MAX) : _smooth;
 
   const temp = opt.corner ? fillArray(4, opt.corner) : Array(4).fill(null);
   _corner = temp.map(t => t === null ?
@@ -163,5 +166,15 @@ function notCorner(x, y) {
   return (x !== 0 && x !== _max - 1 && y !== 0 && y !== _max - 1) ||
   !posInArray(x, y, _corners);
 }
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('ds-heightmap: This version is used for development. You can switch to production version when all done.');
+}
+
+let gl;
+if (typeof window !== 'undefined' && typeof window === 'object') gl = window;
+if (typeof self !== 'undefined' && typeof self === 'object') gl = self;
+
+if (gl) gl.DsHeightmap = ds;
 
 module.export = ds;
