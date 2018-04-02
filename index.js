@@ -171,10 +171,4 @@ if (process.env.NODE_ENV === 'development') {
   console.log('ds-heightmap: This version is used for development. You can switch to production version when all done.');
 }
 
-let gl;
-if (typeof window !== 'undefined' && typeof window === 'object') gl = window;
-if (typeof self !== 'undefined' && typeof self === 'object') gl = self;
-
-if (gl) gl.DsHeightmap = ds;
-
-module.export = ds;
+module.exports = ds;
