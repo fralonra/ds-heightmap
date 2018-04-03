@@ -15,8 +15,8 @@ const POWER_DEFAULT = 7,
       ROUGH_DEFAULT = 0.8,
       SMOOTH_DEFAULT = 3;
 
-const _data = [];
-const _corners = [];
+let _data = [];
+let _corners = [];
 let _power = POWER_DEFAULT,
     _corner = CORNER_DEFAULT,
     _offset = OFFSET_DEFAULT,
@@ -88,11 +88,12 @@ function initVar(p, opt) {
     _range :
     t
   );
-  _corners.push([0, 0], [_max - 1, 0], [_max - 1, _max - 1], [0, _max - 1]);
-  _initialAverage = average(_corner);
 }
 
 function initData() {
+  _data = [];
+  _corners = [[0, 0], [_max - 1, 0], [_max - 1, _max - 1], [0, _max - 1]];
+  _initialAverage = average(_corner);
   for (let i = 0; i < _max; ++i) {
     _data.push(Array(_max).fill(0));
   }
