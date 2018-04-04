@@ -5,15 +5,13 @@ const rgbToHex = require('./utils').rgbToHex;
 const posInArray = require('./utils').posInArray;
 
 const POWER_MIN = 2,
-      POWER_MAX = 12,
-      SMOOTH_MAX = 3;
+      POWER_MAX = 12;
 
 const POWER_DEFAULT = 7,
       CORNER_DEFAULT = [1, 1, 1, 1],
       OFFSET_DEFAULT = -0.2,
       RANGE_DEFAULT = 7,
-      ROUGH_DEFAULT = 0.8,
-      SMOOTH_DEFAULT = 3;
+      ROUGH_DEFAULT = 0.8;
 
 let _data = [];
 let _corners = [];
@@ -22,7 +20,6 @@ let _power = POWER_DEFAULT,
     _offset = OFFSET_DEFAULT,
     _range = RANGE_DEFAULT,
     _rough = ROUGH_DEFAULT,
-    _smooth = SMOOTH_DEFAULT,
     _max = 0,
     _initialAverage = 0;
 
@@ -35,35 +32,11 @@ const ds = {
 
   run () {
     diamondSquare(_max - 1);
-    if (_smooth > 0) this.smooth(_smooth);
   },
 
   out () {
     return _data;
   },
-
-  smooth (factor) {
-    const f = makeValInRange(factor, 0, SMOOTH_MAX);
-    _data.forEach((d, x) => {
-      d.forEach((v, y) => {
-        let svCount = 0;
-        let ov = null;
-        for (let i = x - 1; i <= x + 1; ++i) {
-          for (let j = y - 1; j <= y + 1; ++j) {
-            if (i < 0 || i > _max - 1 || j < 0 || j > _max - 1) break;
-            if (i === x && j === y) break;
-            if (_data[i][j] === v) ++svCount;
-            else if (!ov) ov = _data[i][j];
-            if (i === x + 1 && j === y + 1) {
-              if (svCount < factor) {
-                _data[x][y] = ov;
-              }
-            }
-          }
-        }
-      });
-    });
-  }
 };
 
 function initVar(p, opt) {
@@ -77,7 +50,6 @@ function initVar(p, opt) {
   _offset = typeof opt.offset === 'number' ? makeValInRange(opt.offset, -1, 1) : _offset;
   _range = typeof opt.range === 'number' ? makeValInRange(opt.range, 1, 10) : _range;
   _rough = typeof opt.rough === 'number' ? makeValInRange(opt.rough, 0, 0.9) : _rough;
-  _smooth = typeof opt.smooth === 'number' ? makeValInRange(opt.smooth, 0, SMOOTH_MAX) : _smooth;
 
   const temp = opt.corner ? fillArray(4, opt.corner) : Array(4).fill(null);
   _corner = temp.map(t => t === null ?
@@ -155,11 +127,11 @@ function diamond(x, y, half) {
 }
 
 function getValue(average, size) {
-  return makeValInRange(Math.round(average + genOffset(size)), -_range, _range);
+  return Math.round(average + genOffset(size));
 }
 
 function genOffset(size) {
-  const roughFactor = size / _max / (1 - _rough);
+  const roughFactor = size / _max / (1 - _rough) * _rough;
   return ((Math.random() + _offset) * _range * roughFactor);
 }
 
