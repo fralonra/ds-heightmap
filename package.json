@@ -1,6 +1,6 @@
 {
   "name": "ds-heightmap",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Use diamond-square algorithm to generate heightmaps.",
   "main": "index.js",
   "scripts": {

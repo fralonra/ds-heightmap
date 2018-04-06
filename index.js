@@ -47,18 +47,14 @@ function initVar(p, opt) {
     n;
   _max = Math.pow(2, _power) + 1;
 
-  _offset = typeof opt.offset === 'number' ? makeValInRange(opt.offset, -1, 1) : _offset;
+  _offset = typeof opt.offset === 'number' ? makeValInRange(opt.offset, -0.9, 0.9) : _offset;
   _range = typeof opt.range === 'number' ? makeValInRange(opt.range, 1, 10) : _range;
   _rough = typeof opt.rough === 'number' ? makeValInRange(opt.rough, 0, 0.9) : _rough;
 
   const temp = opt.corner ? fillArray(4, opt.corner) : Array(4).fill(null);
   _corner = temp.map(t => t === null ?
     Math.random() * _range :
-    t < 0 ?
-    0 :
-    t > _range ?
-    _range :
-    t
+    makeValInRange(t, -_range, _range)
   );
 }
 
@@ -127,12 +123,13 @@ function diamond(x, y, half) {
 }
 
 function getValue(average, size) {
-  return Math.round(average + genOffset(size));
+  return makeValInRange(Math.round(average + genRandomValue(average, size)), -_range, _range);
 }
 
-function genOffset(size) {
-  const roughFactor = size / _max / (1 - _rough) * _rough;
-  return ((Math.random() + _offset) * _range * roughFactor);
+function genRandomValue(average, size) {
+  const gap = (_range - Math.abs(average)) / _range;
+  const distance = size / _max;
+  return average * ((Math.random() * gap + (_offset * 1 - 1) * 0.5) * distance * 4 + (Math.random() - 0.5) * _rough * 0.02 * size);
 }
 
 function notCorner(x, y) {
