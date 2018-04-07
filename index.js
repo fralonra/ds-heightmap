@@ -5,7 +5,8 @@ const rgbToHex = require('./utils').rgbToHex;
 const posInArray = require('./utils').posInArray;
 
 const POWER_MIN = 2,
-      POWER_MAX = 12;
+      POWER_MAX = 12,
+      VALUE_MIN = 1;
 
 const POWER_DEFAULT = 7,
       CORNER_DEFAULT = [1, 1, 1, 1],
@@ -48,13 +49,13 @@ function initVar(p, opt) {
   _max = Math.pow(2, _power) + 1;
 
   _offset = typeof opt.offset === 'number' ? makeValInRange(opt.offset, -0.9, 0.9) : _offset;
-  _range = typeof opt.range === 'number' ? makeValInRange(opt.range, 1, 10) : _range;
-  _rough = typeof opt.rough === 'number' ? makeValInRange(opt.rough, 0, 0.9) : _rough;
+  _range = typeof opt.range === 'number' ? makeValInRange(opt.range, VALUE_MIN, opt.range) : _range;
+  _rough = typeof opt.rough === 'number' ? makeValInRange(opt.rough, 0.1, 0.9) : _rough;
 
   const temp = opt.corner ? fillArray(4, opt.corner) : Array(4).fill(null);
   _corner = temp.map(t => t === null ?
     Math.random() * _range :
-    makeValInRange(t, -_range, _range)
+    makeValInRange(t, VALUE_MIN, _range)
   );
 }
 
@@ -123,13 +124,23 @@ function diamond(x, y, half) {
 }
 
 function getValue(average, size) {
-  return makeValInRange(Math.round(average + genRandomValue(average, size)), -_range, _range);
+  return makeValInRange(Math.round(average + genRandomValue(average, size)), VALUE_MIN, _range);
 }
 
 function genRandomValue(average, size) {
-  const gap = (_range - Math.abs(average)) / _range;
+  const gap = ((_range - VALUE_MIN) / 2 - (average - VALUE_MIN)) / ((_range - VALUE_MIN) / 2);
   const distance = size / _max;
-  return average * ((Math.random() * gap + (_offset * 1 - 1) * 0.5) * distance * 4 + (Math.random() - 0.5) * _rough * 0.02 * size);
+  const offset = (randomize(_offset, 0.8) * 0.8 + randomize(getSign(gap) * _rough, 0.9) * 0.2) * randomize(distance, 0.5) * 4;
+  const rough = (Math.random() - 0.5) * _rough * size * 0.02;
+  return average * (offset + rough);
+}
+
+function randomize(value, p) {
+  return value * (p + (1 - p) * Math.random());
+}
+
+function getSign(value) {
+  return Math.abs(value) === 0 ? getSign(Math.random() - 0.5) : Math.abs(value) / value;
 }
 
 function notCorner(x, y) {

@@ -16,10 +16,10 @@ npm install ds-heightmap
 ```javascript
 const ds = require('ds-heightmap');
 ds.init(12, {
-  corner: [1, 1, 5, 5],
-  offset: -0.5,
-  range: 9,
-  rough: 0.8
+  corner: [1, 1, 5, 5], // determine the heights of four corners
+  offset: -0.5, // effect the overall height of the map
+  range: 9, // all the height values in the map will be within -range to range
+  rough: 0.8 // effect the terrain variability (roughness)
 }); // pass factors
 ds.run(); // generate a new heightmap base on the factors above
 const data = ds.out(); // return a 2D-array of numbers
@@ -44,3 +44,7 @@ new Jimp(size, size, (err, image) => {
   });
 });
 ```
+
+## Demo
+
+You can visit the online [demo](https://fralonra.github.io/zatlas/) to try it out.
