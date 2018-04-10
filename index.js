@@ -35,6 +35,17 @@ const ds = {
 
   out () {
     return _data;
+  },
+
+  ds (power, opt = {}) {
+    ds.init(power, opt);
+    ds.run();
+    return ds.out();
+  },
+
+  gen () {
+    ds.run();
+    return ds.out();
   }
 };
 

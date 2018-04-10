@@ -23,6 +23,21 @@ ds.init(12, {
 });                     // pass factors
 ds.run();               // generate a new heightmap base on the factors above
 const data = ds.out();  // return a 2D-array of numbers
+
+// Or call ds.gen() to do ds.run() and ds.out() together.
+```
+
+Or in another way:
+
+```javascript
+const ds = require('ds-heightmap').ds;
+
+const data = ds(12, {
+  corner: [1, 1, 5, 5],
+  offset: -0.5,
+  range: 9,
+  rough: 0.8
+});        
 ```
 
 Once you get the map data, you can render it into an image using an external image processing library.
@@ -44,6 +59,31 @@ new Jimp(size, size, (err, image) => {
   });
 });
 ```
+
+## API
+
+### init (power, option = {})
+Init the library. Where `power` effects the size of the map (If `power` equals `n`, a map of 2<sup>n</sup> * 2<sup>n</sup> will be produced). For `option`, see [below](#options).
+
+### run ()
+Manually call this function to do the diamond-square algorithm.
+
+### out ()
+Return the map data.
+
+### ds (power, option = {})
+Run `init`, `run`, `out` all together.
+
+### gen ()
+Run `run`, `out` all together.
+
+### options
+| Option | Description | Type | Default |
+| --- | --- | --- | --- |
+| corner | Determine the heights of four corners. They are initial values in diamond-square algorithm. Can be an array of four numbers or only one number which means all corners have the same height. | Array, Number | [1, 1, 1, 1] |
+| offset | Designed to effect the overall height of the map. Ranged from `-0.9` to `0.9`. | Number | -0.2 |
+| range | All the height values in the map will be within `-range` to `range`. The min value is `1`. | Number | 7 |
+| rough | Designed to effect the terrain variability (roughness). Ranged from `0.1` to `0.9`. | Number | 0.8 |
 
 ## Demo
 
