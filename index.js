@@ -1,7 +1,6 @@
 const average = require('./utils').average;
 const fillArray = require('./utils').fillArray;
 const makeValInRange = require('./utils').makeValInRange;
-const rgbToHex = require('./utils').rgbToHex;
 const posInArray = require('./utils').posInArray;
 
 const POWER_MIN = 2,
@@ -25,7 +24,6 @@ let _power = POWER_DEFAULT,
     _initialAverage = 0;
 
 const ds = {
-
   init (power, opt = {}) {
     initVar(power, opt);
     initData();
@@ -37,10 +35,10 @@ const ds = {
 
   out () {
     return _data;
-  },
+  }
 };
 
-function initVar(p, opt) {
+function initVar (p, opt) {
   const n = Number.isInteger(p) ? p : Number.parseInt(p);
   _power = n < 0 ? POWER_MIN :
     n > POWER_MAX ?
@@ -59,7 +57,7 @@ function initVar(p, opt) {
   );
 }
 
-function initData() {
+function initData () {
   _data = [];
   _corners = [[0, 0], [_max - 1, 0], [_max - 1, _max - 1], [0, _max - 1]];
   _initialAverage = average(_corner);
@@ -71,16 +69,16 @@ function initData() {
   });
 }
 
-function get(x, y) {
+function get (x, y) {
   if (x < 0 || x > _max - 1 || y < 0 || y > _max - 1) return _initialAverage;
   return _data[x][y];
 }
 
-function set(x, y, val) {
+function set (x, y, val) {
   _data[x][y] = val;
 }
 
-function diamondSquare(size) {
+function diamondSquare (size) {
   const half = size / 2;
   let x, y;
   if (half < 1) return _data;
@@ -102,7 +100,7 @@ function diamondSquare(size) {
   diamondSquare(size / 2);
 }
 
-function square(x, y, half) {
+function square (x, y, half) {
   const a = average([
     get(x - half, y - half),
     get(x + half, y - half),
@@ -112,7 +110,7 @@ function square(x, y, half) {
   set(x, y, getValue(a, half));
 }
 
-function diamond(x, y, half) {
+function diamond (x, y, half) {
   const a = average([
     get(x, y - half),
     get(x + half, y),
@@ -123,11 +121,11 @@ function diamond(x, y, half) {
   set(x, y, getValue(a, half));
 }
 
-function getValue(average, size) {
+function getValue (average, size) {
   return makeValInRange(Math.round(average + genRandomValue(average, size)), VALUE_MIN, _range);
 }
 
-function genRandomValue(average, size) {
+function genRandomValue (average, size) {
   const gap = ((_range - VALUE_MIN) / 2 - (average - VALUE_MIN)) / ((_range - VALUE_MIN) / 2);
   const distance = size / _max;
   const offset = (randomize(_offset, 0.8) * 0.8 + randomize(getSign(gap) * _rough, 0.9) * 0.2) * randomize(distance, 0.5) * 4;
@@ -135,15 +133,15 @@ function genRandomValue(average, size) {
   return average * (offset + rough);
 }
 
-function randomize(value, p) {
+function randomize (value, p) {
   return value * (p + (1 - p) * Math.random());
 }
 
-function getSign(value) {
+function getSign (value) {
   return Math.abs(value) === 0 ? getSign(Math.random() - 0.5) : Math.abs(value) / value;
 }
 
-function notCorner(x, y) {
+function notCorner (x, y) {
   return (x !== 0 && x !== _max - 1 && y !== 0 && y !== _max - 1) ||
   !posInArray(x, y, _corners);
 }

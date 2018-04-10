@@ -1,11 +1,13 @@
 {
   "name": "ds-heightmap",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Use diamond-square algorithm to generate heightmaps.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "jest",
+    "lint": "eslint *.js",
+    "jest": "jest",
+    "test": "npm run lint && npm run jest",
     "umd": "NODE_ENV=development browserify index.js -t envify -s DsHeightmap -o ds-heightmap.js",
     "umd-min": "NODE_ENV=production browserify index.js -t envify -t babelify --presets [ env react ] -s DsHeightmap -t uglifyify -o | uglifyjs --compress unused,dead_code -o ds-heightmap.min.js",
     "build": "npm run umd && npm run umd-min",
@@ -31,6 +33,12 @@
     "babelify": "^8.0.0",
     "browserify": "^16.1.1",
     "envify": "^4.1.0",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
     "jest": "^22.4.3",
     "uglify-js": "^3.3.18",
     "uglifyify": "^4.0.5"
