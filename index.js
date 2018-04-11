@@ -37,15 +37,14 @@ const ds = {
     return _data;
   },
 
-  ds (power, opt = {}) {
-    ds.init(power, opt);
+  gen () {
     ds.run();
     return ds.out();
   },
 
-  gen () {
-    ds.run();
-    return ds.out();
+  ds (power, opt = {}) {
+    ds.init(power, opt);
+    return ds.gen();
   }
 };
 

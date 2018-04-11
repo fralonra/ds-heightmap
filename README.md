@@ -5,6 +5,10 @@
 
 Using [diamond-square algorithm](https://en.wikipedia.org/wiki/Diamond-square_algorithm) to generate heightmaps which stored in a 2D-array.
 
+## Demo
+
+You can visit the online [demo](https://fralonra.github.io/zatlas/) to try it out.
+
 ## Install
 
 ```bash
@@ -40,6 +44,22 @@ const data = ds(12, {
 });        
 ```
 
+Using ES6:
+```javascript
+import heightmap, { ds } from 'ds-heightmap';
+
+heightmap.init(9);
+// or
+const data = ds(7);
+```
+
+Or in **Html**:
+```html
+<script src="/path/to/ds-heightmap.min.js"></script>
+```
+
+### Render the map
+
 Once you get the map data, you can render it into an image using an external image processing library.
 Here is an example with [jimp](https://github.com/oliver-moran/jimp):
 
@@ -68,13 +88,13 @@ Init the library. Where `power` effects the size of the map (If `power` equals `
 ### run ()
 Manually call this function to do the diamond-square algorithm.
 
-### out ()
+### out () => `array`
 Return the map data.
 
-### ds (power, option = {})
+### ds (power, option = {}) => `array`
 Run `init`, `run`, `out` all together.
 
-### gen ()
+### gen () => `array`
 Run `run`, `out` all together.
 
 ### options
@@ -84,7 +104,3 @@ Run `run`, `out` all together.
 | offset | Designed to effect the overall height of the map. Ranged from `-0.9` to `0.9`. | Number | -0.2 |
 | range | All the height values in the map will be within `-range` to `range`. The min value is `1`. | Number | 7 |
 | rough | Designed to effect the terrain variability (roughness). Ranged from `0.1` to `0.9`. | Number | 0.8 |
-
-## Demo
-
-You can visit the online [demo](https://fralonra.github.io/zatlas/) to try it out.
