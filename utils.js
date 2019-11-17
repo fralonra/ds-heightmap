@@ -6,12 +6,12 @@ function fillArray (size, data) {
   return typeof i === 'number' ?
     Array(size).fill(data) :
     (Array.isArray(data) ?
-    (data.length < size ?
-    data.concat(Array(size - data.length).fill(data[data.length - 1])) :
-    data.length > size ?
-    data.slice(0, size) :
-    data) :
-    [1, 1, 1, 1]);
+      (data.length < size ?
+        data.concat(Array(size - data.length).fill(data[data.length - 1])) :
+        data.length > size ?
+          data.slice(0, size) :
+          data) :
+      [1, 1, 1, 1]);
 }
 
 function makeValInRange (val, m1, m2) {
@@ -26,8 +26,8 @@ function makeValInRange (val, m1, m2) {
   return val > max ?
     max :
     val < min ?
-    min :
-    val;
+      min :
+      val;
 }
 
 function rgbToHex (r, g, b) {

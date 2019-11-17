@@ -4,24 +4,24 @@ const makeValInRange = require('./utils').makeValInRange;
 const posInArray = require('./utils').posInArray;
 
 const POWER_MIN = 2,
-      POWER_MAX = 12,
-      VALUE_MIN = 1;
+  POWER_MAX = 12,
+  VALUE_MIN = 1;
 
 const POWER_DEFAULT = 7,
-      CORNER_DEFAULT = [1, 1, 1, 1],
-      OFFSET_DEFAULT = -0.2,
-      RANGE_DEFAULT = 7,
-      ROUGH_DEFAULT = 0.8;
+  CORNER_DEFAULT = [1, 1, 1, 1],
+  OFFSET_DEFAULT = -0.2,
+  RANGE_DEFAULT = 7,
+  ROUGH_DEFAULT = 0.8;
 
 let _data = [];
 let _corners = [];
 let _power = POWER_DEFAULT,
-    _corner = CORNER_DEFAULT,
-    _offset = OFFSET_DEFAULT,
-    _range = RANGE_DEFAULT,
-    _rough = ROUGH_DEFAULT,
-    _max = 0,
-    _initialAverage = 0;
+  _corner = CORNER_DEFAULT,
+  _offset = OFFSET_DEFAULT,
+  _range = RANGE_DEFAULT,
+  _rough = ROUGH_DEFAULT,
+  _max = 0,
+  _initialAverage = 0;
 
 const ds = {
   init (power, opt = {}) {
@@ -52,8 +52,8 @@ function initVar (p, opt) {
   const n = Number.isInteger(p) ? p : Number.parseInt(p);
   _power = n < 0 ? POWER_MIN :
     n > POWER_MAX ?
-    POWER_MAX :
-    n;
+      POWER_MAX :
+      n;
   _max = Math.pow(2, _power) + 1;
 
   _offset = typeof opt.offset === 'number' ? makeValInRange(opt.offset, -0.9, 0.9) : _offset;
