@@ -1,6 +1,6 @@
 # ds-heightmap
 
-[![Build Status](https://travis-ci.org/fralonra/ds-heightmap.svg?branch=master)](https://travis-ci.org/fralonra/ds-heightmap)
+[![Build Status](https://travis-ci.com/fralonra/ds-heightmap.svg?branch=master)](https://travis-ci.com/fralonra/ds-heightmap)
 [![npm version](https://img.shields.io/npm/v/ds-heightmap.svg)](https://www.npmjs.com/package/ds-heightmap)
 
 Using [diamond-square algorithm](https://en.wikipedia.org/wiki/Diamond-square_algorithm) to generate heightmaps which stored in a 2D-array.
