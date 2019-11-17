@@ -57,5 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# lock file
+package-lock.json
+yarn.lock
+
 ds-heightmap.js
 ds-heightmap.min.js

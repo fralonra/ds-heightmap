@@ -90,9 +90,9 @@ function set (x, y, val) {
 
 function diamondSquare (size) {
   const half = size / 2;
-  let x, y;
   if (half < 1) return _data;
 
+  let x, y;
   for (y = half; y < _max; y += size) {
     for (x = half; x < _max; x += size) {
       if (notCorner(x, y)) {
