@@ -18,89 +18,60 @@ npm install --save ds-heightmap
 ## Usage
 
 ```javascript
-const ds = require('ds-heightmap');
-ds.init(12, {
-  corner: [1, 1, 5, 5], // determine the heights of four corners
-  offset: -0.5,         // effect the overall height of the map
-  range: 9,             // all the height values in the map will be within -range to range
-  rough: 0.8            // effect the terrain variability (roughness)
+import { ds } from 'ds-heightmap';
+const data = ds({
+  width: 129,           // the width of the map, must be larger than 1.
+  height: 129,          // the height of the map, must be larger than 1.
+  depth: 2000,          // the value of each pixel will be within 0~depth, default: 2000.
+  rough: 1,             // effect the terrain variability (roughness), default: 1.
 });                     // pass factors
-ds.run();               // generate a new heightmap base on the factors above
-const data = ds.out();  // return a 2D-array of numbers
-
-// Or call ds.gen() to do ds.run() and ds.out() together.
-```
-
-Or in another way:
-
-```javascript
-const ds = require('ds-heightmap').ds;
-
-const data = ds(12, {
-  corner: [1, 1, 5, 5],
-  offset: -0.5,
-  range: 9,
-  rough: 0.8
-});        
-```
-
-Using ES6:
-```javascript
-import heightmap, { ds } from 'ds-heightmap';
-
-heightmap.init(9);
-// or
-const data = ds(7);
-```
-
-Or in **Html**:
-```html
-<script src="/path/to/ds-heightmap.min.js"></script>
+console.log(data.data); // you would get a 2D-array of numbers
+console.log(data.max);  // the maximum number in all pixels
+console.log(data.min);  // the minimum number in all pixels
 ```
 
 ### Render the map
 
-Once you get the map data, you can render it into an image using an external image processing library.
-Here is an example with [jimp](https://github.com/oliver-moran/jimp):
+Here is an example of how to render the data on canvas:
 
 ```javascript
-const Jimp = require('jimp');
+import { ds } from 'ds-heightmap'
 
-new Jimp(size, size, (err, image) => {
-  if (err) throw err;
+const width = 400
+const height = 300
+const { data, max, min } = ds({
+  width,
+  height
+})
 
-  data.forEach((d, x) => {
-    d.forEach((v, y) => {
-      image.setPixelColor(convertValueToColor(v), x, y);
-    });
-  });
-  image.write('map.png', (err) => {
-    if (err) throw err;
-  });
-});
+const range = max - min
+const colorData = []
+for (let i = 0; i < height; i++) {
+  for (let j = 0; j < width; j++) {
+    const level = (data[j][i] - min) / range
+    if (level > 0.8) {
+      colorData.push(186, 174, 154, 255)
+    } else if (level > 0.6) {
+      colorData.push(222, 214, 163, 255)
+    } else if (level > 0.4) {
+      colorData.push(209, 215, 171, 255)
+    } else if (level > 0.2) {
+      colorData.push(189, 204, 150, 255)
+    } else {
+      colorData.push(148, 191, 139, 255)
+    }
+  }
+}
+
+const imageData = new ImageData(
+  Uint8ClampedArray.from(colorData),
+  width,
+  height,
+);
+
+const canvas = document.getElementById('canvas')
+canvas.width = width
+canvas.height = height
+const ctx = canvas.getContext('2d')
+ctx.putImageData(imageData, 0, 0)
 ```
-
-## API
-
-### init (power, option = {})
-Init the library. Where `power` effects the size of the map (If `power` equals `n`, a map of 2<sup>n</sup> * 2<sup>n</sup> will be produced). For `option`, see [below](#options).
-
-### run ()
-Manually call this function to do the diamond-square algorithm.
-
-### out () => `array`
-Return the map data.
-
-### ds (power, option = {}) => `array`
-Run `init`, `run`, `out` all together.
-
-### gen () => `array`
-Run `run`, `out` all together.
-
-### options
-| Option | Description | Type | Default |
-| --- | --- | --- | --- |
-| corner | Determine the heights of four corners. They are initial values in diamond-square algorithm. Can be an array of four numbers or only one number which means all corners have the same height. | Array, Number | [1, 1, 1, 1] |
-| offset | Designed to effect the overall height of the map. Ranged from `-0.9` to `0.9`. | Number | -0.2 |
-| range | All the height values in the map will be within `-range` to `range`. The min value is `1`. | Number | 7 |
-| rough | Designed to effect the terrain variability (roughness). Ranged from `0.1` to `0.9`. | Number | 0.8 |

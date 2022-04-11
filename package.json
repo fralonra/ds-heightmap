@@ -1,17 +1,23 @@
 {
   "name": "ds-heightmap",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "description": "Use diamond-square algorithm to generate heightmaps.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    "import": "./index.esm.mjs",
+    "require": "./lib/index.js"
+  },
+  "files": [
+    "lib",
+    "index.esm.mjs"
+  ],
   "scripts": {
-    "start": "node index.js",
-    "lint": "eslint *.js --fix",
-    "jest": "jest",
-    "test": "npm run lint && npm run jest",
-    "umd": "NODE_ENV=development browserify index.js -t envify -s DsHeightmap -o ds-heightmap.js",
-    "umd-min": "NODE_ENV=production browserify index.js -t envify -t babelify --presets [ env react ] -s DsHeightmap -t uglifyify -o | uglifyjs --compress unused,dead_code -o ds-heightmap.min.js",
-    "build": "npm run umd && npm run umd-min",
-    "prepublish": "npm run build"
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "lint": "tsc --noEmit --noUnusedLocals true --noUnusedParameters true",
+    "prepublish": "npm run build",
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -28,23 +34,6 @@
   },
   "homepage": "https://github.com/fralonra/ds-heightmap#readme",
   "devDependencies": {
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babelify": "^8.0.0",
-    "browserify": "^16.1.1",
-    "envify": "^4.1.0",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.10.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "jest": "^22.4.3",
-    "pre-commit": "^1.2.2",
-    "uglify-js": "^3.3.18",
-    "uglifyify": "^4.0.5"
-  },
-  "jest": {
-    "testURL": "http://localhost"
+    "typescript": "^4.6.3"
   }
 }
