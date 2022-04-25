@@ -1,0 +1,31 @@
+name: Build Demo and Deploy to Github Pages
+
+on: [push]
+
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build Library
+        run: |
+          npm install
+          npm run build
+
+      - name: Build Demo
+        run: |
+          cd demo
+          npm install
+          npm run build
+          mkdir build
+          cp -r dist build
+          cp index.html build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.3.0
+        with:
+          branch: gh-pages
+          folder: demo/build
