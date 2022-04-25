@@ -26,8 +26,6 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
     ...config,
   };
 
-  let debugCount = 0;
-
   const { width, height, rough, randomizer, reshaper } = conf;
   if (width < 2) throw "Invalid config: width must be larger than 1.";
   if (height < 2) throw "Invalid config: height must be larger than 1.";
@@ -136,14 +134,12 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
     for (y = halfH; y < side; y += sizeH - 1) {
       for (x = halfW; x < side; x += sizeW - 1) {
         if (isCorner(x, y)) continue;
-        debugCount++;
         square(x, y, halfW, halfH);
       }
     }
     for (y = 0; y < side; y += halfH) {
       for (x = (y / halfH) % 2 === 0 ? halfW : 0; x < side; x += sizeW - 1) {
         if (isCorner(x, y)) continue;
-        debugCount++;
         diamond(x, y, halfW, halfH);
       }
     }
