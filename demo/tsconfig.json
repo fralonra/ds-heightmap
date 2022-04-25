@@ -1,0 +1,15 @@
+{
+  "include": [
+    "src"
+  ],
+  "compilerOptions": {
+    "target": "es2018",
+    "moduleResolution": "node",
+    "declaration": false,
+    "esModuleInterop": true,
+    "strict": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true
+  }
+}

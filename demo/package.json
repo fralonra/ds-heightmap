@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "author": "zoron (https://github.com/fralonra/)",
+  "license": "MIT",
+  "scripts": {
+    "build": "spack"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.171",
+    "dat.gui": "^0.7.9"
+  }
+}

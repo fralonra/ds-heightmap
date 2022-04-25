@@ -7,7 +7,7 @@ Using [diamond-square algorithm](https://en.wikipedia.org/wiki/Diamond-square_al
 
 ## Demo
 
-You can visit the online [demo](https://fralonra.github.io/zatlas/) to try it out.
+You can visit the online [demo](https://fralonra.github.io/ds-heightmap/) to try it out.
 
 ## Install
 
