@@ -2356,7 +2356,7 @@ var load = __swcpack_require__.bind(void 0, function(module, exports) {
             data[x][y] = n;
         };
         var conf = _objectSpread({}, DEFAULT_CONFIG, config);
-        var width = conf.width, height = conf.height, rough = conf.rough, randomizer = conf.randomizer, reshaper = conf.reshaper;
+        var width = conf.width, height = conf.height, rough = conf.rough, randomizer = conf.randomizer;
         if (width < 2) throw "Invalid config: width must be larger than 1.";
         if (height < 2) throw "Invalid config: height must be larger than 1.";
         var max = Number.MIN_SAFE_INTEGER;
@@ -2382,7 +2382,6 @@ var load = __swcpack_require__.bind(void 0, function(module, exports) {
             max: max,
             min: min
         };
-        if (typeof reshaper === "function") reshaper(output);
         if (data.length !== width) data.splice(width);
         var _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = undefined;
         if (data[0].length !== height) try {
