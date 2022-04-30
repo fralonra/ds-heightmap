@@ -22,9 +22,18 @@ import { ds } from 'ds-heightmap';
 const data = ds({
   width: 129,           // the width of the map, must be larger than 1.
   height: 129,          // the height of the map, must be larger than 1.
-  depth: 2000,          // the value of each pixel will be within 0~depth, default: 2000.
-  rough: 1,             // effect the terrain variability (roughness), default: 1.
-});                     // pass factors
+  depth: 2000,          // [optional] the value of each pixel will be within 0~depth, default: 2000.
+  rough: 1,             // [optional] effect the terrain variability (roughness), default: 1.
+  randomizer(base, range) {
+    // [optional] customize the logic of random height generation.
+    // receive two number arguments:
+    // first is the average of the four(or three) vertices of the square/diamomnd step.
+    // second is half of the square/diamond width plus half of its height, you might want to use this value to decide how big the random value plus to the average is.
+    // finally, return the height
+    const random = Math.random() * Math.pow(2, -range / (129 * 2))
+    return base + random
+  }
+});
 console.log(data.data); // you would get a 2D-array of numbers
 console.log(data.max);  // the maximum number in all pixels
 console.log(data.min);  // the minimum number in all pixels
