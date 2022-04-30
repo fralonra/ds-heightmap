@@ -4,7 +4,6 @@ interface DSConfig {
   depth?: number;
   rough?: number;
   randomizer?: (base: number, range: number) => number;
-  reshaper?: (output: OutputMap) => void;
 }
 
 interface OutputMap {
@@ -26,7 +25,7 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
     ...config,
   };
 
-  const { width, height, rough, randomizer, reshaper } = conf;
+  const { width, height, rough, randomizer } = conf;
   if (width < 2) throw "Invalid config: width must be larger than 1.";
   if (height < 2) throw "Invalid config: height must be larger than 1.";
 
@@ -58,9 +57,6 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
   shape(side, side);
 
   const output = { data, max, min };
-  if (typeof reshaper === "function") {
-    reshaper(output);
-  }
 
   if (data.length !== width) {
     data.splice(width);
