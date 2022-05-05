@@ -16,7 +16,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "tsc --noEmit --noUnusedLocals true --noUnusedParameters true",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "test": "npm run lint"
   },
   "repository": {
