@@ -25,9 +25,9 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
     ...config,
   }
 
-  const { width, height, rough, randomizer } = conf
-  if (width < 2) throw 'Invalid config: width must be larger than 1.'
-  if (height < 2) throw 'Invalid config: height must be larger than 1.'
+  const { rough, randomizer } = conf
+  const width = conf.width < 2 ? DEFAULT_CONFIG.width : conf.width
+  const height = conf.height < 2 ? DEFAULT_CONFIG.height : conf.height
 
   let max = Number.MIN_SAFE_INTEGER
   let min = Number.MAX_SAFE_INTEGER
