@@ -2361,7 +2361,7 @@ var load = __swcpack_require__.bind(void 0, function(module, exports) {
         if (height < 2) throw "Invalid config: height must be larger than 1.";
         var max = Number.MIN_SAFE_INTEGER;
         var min = Number.MAX_SAFE_INTEGER;
-        var depth = conf.depth === undefined ? DEFAULT_CONFIG.depth : conf.depth;
+        var depth = conf.depth === undefined || conf.depth <= 0 ? DEFAULT_CONFIG.depth : conf.depth;
         var maxSide = Math.max(width, height);
         var side = 0;
         if (Math.log2(maxSide - 1) % 1 === 0) side = maxSide;
