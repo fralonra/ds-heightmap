@@ -32,7 +32,10 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
   let max = Number.MIN_SAFE_INTEGER
   let min = Number.MAX_SAFE_INTEGER
 
-  const depth = conf.depth === undefined ? DEFAULT_CONFIG.depth : conf.depth
+  const depth =
+    conf.depth === undefined || conf.depth <= 0
+      ? DEFAULT_CONFIG.depth
+      : conf.depth
 
   const maxSide = Math.max(width, height)
   let side = 0
