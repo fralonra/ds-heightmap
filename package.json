@@ -5,13 +5,12 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "exports": {
-    "import": "./index.esm.mjs",
-    "require": "./lib/index.js"
+    ".": "./lib/index.js",
+    "./wasm": "./wasm/ds_heightmap.js"
   },
   "files": [
     "lib",
-    "wasm",
-    "index.esm.mjs"
+    "wasm"
   ],
   "scripts": {
     "build": "tsc",
