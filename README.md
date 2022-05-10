@@ -39,6 +39,23 @@ console.log(data.max);  // the maximum number in all pixels
 console.log(data.min);  // the minimum number in all pixels
 ```
 
+There is also a WebAssembly version of the module:
+```javascript
+import { Runner } from 'ds-heightmap/wasm';
+const runner = new Runner(
+  129,   // width
+  129,   // height
+  2000,  // depth
+  1      // rough
+);
+const data = runner.ds();
+console.log(data.data);
+console.log(data.max);
+console.log(data.min);
+```
+
+*Note: `randomizer` is not supported in WebAssembly version yet.*
+
 ### Render the map
 
 Here is an example of how to render the data on canvas:

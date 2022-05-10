@@ -10,13 +10,15 @@
   },
   "files": [
     "lib",
+    "wasm",
     "index.esm.mjs"
   ],
   "scripts": {
     "build": "tsc",
+    "build:wasm": "cd rs && wasm-pack build --release --out-dir ../wasm && rm ../wasm/.gitignore",
     "build:watch": "tsc --watch",
     "lint": "tsc --noEmit --noUnusedLocals true --noUnusedParameters true",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run build && npm run build:wasm",
     "test": "npm run lint"
   },
   "repository": {
