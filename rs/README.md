@@ -27,5 +27,4 @@ fn main() {
     println!("max: {}", output.max);
     println!("min: {}", output.min);
 }
-
 ```
