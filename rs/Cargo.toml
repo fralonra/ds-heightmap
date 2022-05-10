@@ -1,0 +1,22 @@
+[package]
+authors = ["Zoron <fralonra@aliyun.com>"]
+description = "Using diamond-square algorithm to generate heightmaps which stored in a 2D-array."
+edition = "2021"
+homepage = "https://github.com/fralonra/ds-heightmap"
+keywords = ["diamond-square", "heightmap"]
+license = "MIT"
+name = "ds-heightmap"
+readme = "README.md"
+repository = "https://github.com/fralonra/ds-heightmap"
+version = "0.1.0"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+rand = "0.8"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = {version = "0.2", features = ["js"]}
+js-sys = "0.3"
+wasm-bindgen = "0.2"
