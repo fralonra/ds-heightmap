@@ -116,7 +116,6 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
         Math.max(base, depth - base) *
         range) /
         (side + side)) *
-        4 *
         rough *
         base) /
         depth
