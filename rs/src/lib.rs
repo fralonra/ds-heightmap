@@ -245,7 +245,6 @@ impl Runner {
                 })
                 * range)
                 / (self.side + self.side) as f32)
-                * 4.0
                 * self.rough
                 * base)
                 / self.depth;
