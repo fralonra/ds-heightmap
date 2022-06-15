@@ -2343,7 +2343,7 @@ var load = __swcpack_require__.bind(void 0, function(module, exports) {
         };
         var randomize = function randomize(base, range) {
             if (typeof randomizer === "function") return randomizer(base, range);
-            var n = base + (Math.random() - base / depth) * Math.max(base, depth - base) * range / (side + side) * 4 * rough * base / depth;
+            var n = base + (Math.random() - base / depth) * Math.max(base, depth - base) * range / (side + side) * rough * base / depth;
             return n > depth ? depth : n < 0 ? 0 : n;
         };
         var square = function square(x, y, halfW, halfH) {
