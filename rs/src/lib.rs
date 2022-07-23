@@ -236,26 +236,7 @@ impl Runner {
     fn randomize(&mut self, base: f32, range: f32) -> f32 {
         let r: f32 = self.rng.gen();
 
-        let n = base
-            + ((((r - base / self.depth)
-                * (if base > self.depth - base {
-                    base
-                } else {
-                    self.depth - base
-                })
-                * range)
-                / (self.side + self.side) as f32)
-                * self.rough
-                * base)
-                / self.depth;
-
-        if n > self.depth {
-            self.depth
-        } else if n > 0.0 {
-            n
-        } else {
-            0.0
-        }
+        base + (r - base / self.depth) * range * self.rough
     }
 
     fn set_side(&mut self, max_side: usize) {
