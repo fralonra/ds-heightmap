@@ -88,7 +88,7 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
     if (y + halfH < side) {
       corners.push(data[x][y + halfH])
     }
-    let n = randomize(
+    const n = randomize(
       corners.reduce((p, c) => p + c, 0) / corners.length,
       halfW + halfH
     )
@@ -110,16 +110,7 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
 
   function randomize(base: number, range: number): number {
     if (typeof randomizer === 'function') return randomizer(base, range)
-    const n =
-      base +
-      ((((Math.random() - base / depth) *
-        Math.max(base, depth - base) *
-        range) /
-        (side + side)) *
-        rough *
-        base) /
-        depth
-    return n > depth ? depth : n < 0 ? 0 : n
+    return base + (Math.random() - base / depth) * range * rough
   }
 
   function shape(sizeW: number, sizeH: number): void {
@@ -147,7 +138,7 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
   function square(x: number, y: number, halfW: number, halfH: number): void {
     if (data[x] === undefined || data[x][y] === undefined) return
 
-    let n = randomize(
+    const n = randomize(
       (data[x - halfW][y - halfH] +
         data[x + halfW][y - halfH] +
         data[x + halfW][y + halfH] +
