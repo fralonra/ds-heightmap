@@ -18,6 +18,7 @@
 #[cfg(target_arch = "wasm32")]
 use js_sys::{Array, Object, Reflect};
 use rand::Rng;
+use rand_distr::{Beta, Distribution};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
 
@@ -130,11 +131,12 @@ impl Runner {
 
     /// Run the Diamond-square algorithm.
     pub fn ds(&mut self) -> Output {
+        let beta = Beta::new(3.0, 3.0).unwrap();
         let p = self.side - 1;
-        self.data[0][0] = self.rng.gen_range(0.0..self.depth);
-        self.data[0][p] = self.rng.gen_range(0.0..self.depth);
-        self.data[p][0] = self.rng.gen_range(0.0..self.depth);
-        self.data[p][p] = self.rng.gen_range(0.0..self.depth);
+        self.data[0][0] = beta.sample(&mut self.rng) * self.depth;
+        self.data[0][p] = beta.sample(&mut self.rng) * self.depth;
+        self.data[p][0] = beta.sample(&mut self.rng) * self.depth;
+        self.data[p][p] = beta.sample(&mut self.rng) * self.depth;
 
         self.shape(self.side as f32, self.side as f32);
 
