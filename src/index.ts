@@ -1,3 +1,5 @@
+import beta from '@stdlib/random-base-beta'
+
 interface DSConfig {
   width: number
   height: number
@@ -52,10 +54,10 @@ function ds(config: DSConfig = DEFAULT_CONFIG): OutputMap {
   }
 
   const p = side - 1
-  data[0][0] = Math.random() * depth
-  data[0][p] = Math.random() * depth
-  data[p][0] = Math.random() * depth
-  data[p][p] = Math.random() * depth
+  data[0][0] = beta(3, 3) * depth
+  data[0][p] = beta(3, 3) * depth
+  data[p][0] = beta(3, 3) * depth
+  data[p][p] = beta(3, 3) * depth
 
   shape(side, side)
 
