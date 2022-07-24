@@ -8,7 +8,7 @@ license = "MIT"
 name = "ds-heightmap"
 readme = "README.md"
 repository = "https://github.com/fralonra/ds-heightmap"
-version = "0.1.1"
+version = "0.1.2"
 
 [lib]
 crate-type = ["cdylib", "lib"]
