@@ -2312,6 +2312,59 @@ var load = __swcpack_require__.bind(void 0, function(module, exports) {
         depth: 2000,
         rough: 1
     };
+    function beta(alpha, beta) {
+        var gamma = function gamma(alpha, beta) {
+            if (alpha > 1) {
+                var ainv = Math.sqrt(2.0 * alpha - 1.0);
+                var bbb = alpha - Math.log(4.0);
+                var ccc = alpha + ainv;
+                while(true){
+                    var u1 = Math.random();
+                    if (!(1e-7 < u1 && u1 < 0.9999999)) {
+                        continue;
+                    }
+                    var u2 = 1.0 - Math.random();
+                    var v = Math.log(u1 / (1.0 - u1)) / ainv;
+                    var x = alpha * Math.exp(v);
+                    var z = u1 * u1 * u2;
+                    var r = bbb + ccc * v - x;
+                    if (r + SG_MAGICCONST - 4.5 * z >= 0.0 || r >= Math.log(z)) {
+                        return x * beta;
+                    }
+                }
+            } else if (alpha == 1.0) {
+                var u = Math.random();
+                while(u <= 1e-7){
+                    u = Math.random();
+                }
+                return -Math.log(u) * beta;
+            } else {
+                var x1 = 0;
+                while(true){
+                    var u3 = Math.random();
+                    var b = (Math.E + alpha) / Math.E;
+                    var p = b * u3;
+                    if (p <= 1.0) {
+                        x1 = Math.pow(p, 1.0 / alpha);
+                    } else {
+                        x1 = -Math.log((b - p) / alpha);
+                    }
+                    var u4 = Math.random();
+                    if (p > 1.0) {
+                        if (u4 <= Math.pow(x1, alpha - 1.0)) {
+                            break;
+                        }
+                    } else if (u4 <= Math.exp(-x1)) {
+                        break;
+                    }
+                }
+                return x1 * beta;
+            }
+        };
+        var SG_MAGICCONST = 1 + Math.log(4.5);
+        var alpha_gamma = gamma(alpha, 1);
+        return alpha_gamma / (alpha_gamma + gamma(beta, 1));
+    }
     function ds() {
         var config = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : DEFAULT_CONFIG;
         var diamond = function diamond(x, y, halfW, halfH) {
@@ -2371,10 +2424,10 @@ var load = __swcpack_require__.bind(void 0, function(module, exports) {
         var data = [];
         for(var i = 0; i < side; ++i)data.push(Array(side).fill(0));
         var p = side - 1;
-        data[0][0] = Math.random() * depth;
-        data[0][p] = Math.random() * depth;
-        data[p][0] = Math.random() * depth;
-        data[p][p] = Math.random() * depth;
+        data[0][0] = beta(3, 3) * depth;
+        data[0][p] = beta(3, 3) * depth;
+        data[p][0] = beta(3, 3) * depth;
+        data[p][p] = beta(3, 3) * depth;
         shape(side, side);
         var output = {
             data: data,
