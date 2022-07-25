@@ -35,8 +35,6 @@
   },
   "homepage": "https://github.com/fralonra/ds-heightmap#readme",
   "devDependencies": {
-    "@stdlib/random-base-beta": "^0.0.7",
-    "buffer": "^6.0.3",
     "typescript": "^4.6.3"
   }
 }
