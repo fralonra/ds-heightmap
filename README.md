@@ -5,9 +5,11 @@
 
 Using [diamond-square algorithm](https://en.wikipedia.org/wiki/Diamond-square_algorithm) to generate heightmaps which stored in a 2D-array.
 
-## Demo
+## Examples
 
-You can visit the online [demo](https://fralonra.github.io/ds-heightmap/) to try it out.
+- [basic](https://fralonra.github.io/ds-heightmap/): Render heightmaps on 2d canvas.
+- [heightmap-visualizer](https://github.com/fralonra/heightmap-visualizer): Heightmap 2d/3d visualization.
+- [zatlas](https://github.com/fralonra/zatlas): Heightmap generator. Use a legacy version of [ds-heightmap](https://github.com/fralonra/ds-heightmap/tree/20ad02e589d6cc40292966b9ecdb6d771d5ba39e).
 
 ## Install
 
