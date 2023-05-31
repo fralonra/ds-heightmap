@@ -7,7 +7,7 @@
 //!
 //! fn main() {
 //!     let mut runner = Runner::new();
-//!     let output = runner.ds();
+//!     let output = runner.ds(&mut rand::thread_rng());
 //!
 //!     println!("data: {:?}", output.data);
 //!     println!("max: {}", output.max);
@@ -47,7 +47,6 @@ pub struct Runner {
     depth: f32,
     rough: f32,
     side: usize,
-    rng: rand::prelude::ThreadRng,
 }
 
 #[cfg(target_arch = "wasm32")]
@@ -61,7 +60,6 @@ pub struct Runner {
     depth: f32,
     rough: f32,
     side: usize,
-    rng: rand::prelude::ThreadRng,
 }
 
 static DEFAULT_WIDTH: usize = 129;
@@ -122,7 +120,6 @@ impl Runner {
             depth: DEFAULT_DEPTH,
             rough: DEFAULT_ROUGH,
             side: 0,
-            rng: rand::thread_rng(),
         };
         runner.set_width(DEFAULT_WIDTH);
         runner.set_height(DEFAULT_HEIGHT);
@@ -130,15 +127,15 @@ impl Runner {
     }
 
     /// Run the Diamond-square algorithm.
-    pub fn ds(&mut self) -> Output {
+    pub fn ds(&mut self, rng: &mut impl rand::Rng) -> Output {
         let beta = Beta::new(3.0, 3.0).unwrap();
         let p = self.side - 1;
-        self.data[0][0] = beta.sample(&mut self.rng) * self.depth;
-        self.data[0][p] = beta.sample(&mut self.rng) * self.depth;
-        self.data[p][0] = beta.sample(&mut self.rng) * self.depth;
-        self.data[p][p] = beta.sample(&mut self.rng) * self.depth;
+        self.data[0][0] = beta.sample(rng) * self.depth;
+        self.data[0][p] = beta.sample(rng) * self.depth;
+        self.data[p][0] = beta.sample(rng) * self.depth;
+        self.data[p][p] = beta.sample(rng) * self.depth;
 
-        self.shape(self.side as f32, self.side as f32);
+        self.shape(self.side as f32, self.side as f32, rng);
 
         if self.data.len() != self.width {
             self.data.truncate(self.width);
@@ -197,7 +194,7 @@ impl Runner {
         }
     }
 
-    fn diamond(&mut self, x: f32, y: f32, half_w: f32, half_h: f32) {
+    fn diamond(&mut self, x: f32, y: f32, half_w: f32, half_h: f32, rng: &mut impl rand::Rng) {
         let mut corners = vec![];
         if x - half_w > 0.0 {
             corners.push(self.data[(x - half_w) as usize][y as usize]);
@@ -216,7 +213,7 @@ impl Runner {
         for v in &corners {
             base += v;
         }
-        let n = self.randomize(base / corners.len() as f32, half_w + half_h);
+        let n = self.randomize(base / corners.len() as f32, half_w + half_h, rng);
 
         if (x as usize) < self.width && (y as usize) < self.height {
             if n < self.min {
@@ -235,8 +232,8 @@ impl Runner {
         (x == 0.0 && y == 0.0) || (x == 0.0 && y == p) || (x == p && y == 0.0) || (x == p && y == p)
     }
 
-    fn randomize(&mut self, base: f32, range: f32) -> f32 {
-        let r: f32 = self.rng.gen();
+    fn randomize(&mut self, base: f32, range: f32, rng: &mut impl rand::Rng) -> f32 {
+        let r: f32 = rng.gen();
 
         base + (r - base / self.depth) * range * self.rough
     }
@@ -252,7 +249,7 @@ impl Runner {
         self.data = vec![vec![0.0; side]; side];
     }
 
-    fn shape(&mut self, size_w: f32, size_h: f32) {
+    fn shape(&mut self, size_w: f32, size_h: f32, rng: &mut impl Rng) {
         if size_w <= 2.0 || size_h <= 2.0 {
             return;
         }
@@ -267,7 +264,7 @@ impl Runner {
                 if self.is_corner(x, y) {
                     continue;
                 }
-                self.square(x, y, half_w, half_h);
+                self.square(x, y, half_w, half_h, rng);
                 x += size_w - 1.0;
             }
             y += size_h - 1.0;
@@ -284,22 +281,22 @@ impl Runner {
                 if self.is_corner(x, y) {
                     continue;
                 }
-                self.diamond(x, y, half_w, half_h);
+                self.diamond(x, y, half_w, half_h, rng);
                 x += size_w - 1.0;
             }
             y += half_h;
         }
 
-        self.shape((size_w / 2.0).ceil(), (size_h / 2.0).ceil());
+        self.shape((size_w / 2.0).ceil(), (size_h / 2.0).ceil(), rng);
     }
 
-    fn square(&mut self, x: f32, y: f32, half_w: f32, half_h: f32) {
+    fn square(&mut self, x: f32, y: f32, half_w: f32, half_h: f32, rng: &mut impl Rng) {
         let base = (self.data[(x - half_w) as usize][(y - half_h) as usize]
             + self.data[(x + half_w) as usize][(y - half_h) as usize]
             + self.data[(x + half_w) as usize][(y + half_h) as usize]
             + self.data[(x - half_w) as usize][(y + half_h) as usize])
             / 4.0;
-        let n = self.randomize(base, half_w + half_h);
+        let n = self.randomize(base, half_w + half_h, rng);
 
         if (x as usize) < self.width && (y as usize) < self.height {
             if n < self.min {
