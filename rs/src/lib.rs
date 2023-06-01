@@ -86,7 +86,7 @@ impl Runner {
 
     #[wasm_bindgen(js_name = ds)]
     pub fn wasm_ds(&mut self) -> Result<Object, JsValue> {
-        let output = self.ds();
+        let output = self.ds(&mut rand::thread_rng());
 
         let data = Array::from(&JsValue::from(
             output
