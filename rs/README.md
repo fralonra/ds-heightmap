@@ -28,3 +28,21 @@ fn main() {
     println!("min: {}", output.min);
 }
 ```
+
+If you would like to supply a random number generator:
+
+```rust
+use ds_heightmap::Runner;
+use rand_chacha;
+
+fn main() {
+    let mut rng = ChaCha8Rng::from_entropy();
+
+    let mut runner = Runner::new();
+    let output = runner.ds_with_rng(&mut rng);
+
+    println!("data: {:?}", output.data);
+    println!("max: {}", output.max);
+    println!("min: {}", output.min);
+}
+```
