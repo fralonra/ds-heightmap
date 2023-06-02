@@ -125,13 +125,14 @@ impl Runner {
         runner.set_height(DEFAULT_HEIGHT);
         runner
     }
+
     /// Run the Diamond-square algorithm with a default rng.
     pub fn ds(&mut self) -> Output {
         self.ds_with_rng(&mut rand::thread_rng())
     }
 
     /// Run the Diamond-square algorithm with given rng.
-    pub fn ds_with_rng(&mut self, rng: &mut impl rand::Rng) -> Output {
+    pub fn ds_with_rng(&mut self, rng: &mut impl Rng) -> Output {
         let beta = Beta::new(3.0, 3.0).unwrap();
         let p = self.side - 1;
         self.data[0][0] = beta.sample(rng) * self.depth;
@@ -198,7 +199,7 @@ impl Runner {
         }
     }
 
-    fn diamond(&mut self, x: f32, y: f32, half_w: f32, half_h: f32, rng: &mut impl rand::Rng) {
+    fn diamond(&mut self, x: f32, y: f32, half_w: f32, half_h: f32, rng: &mut impl Rng) {
         let mut corners = vec![];
         if x - half_w > 0.0 {
             corners.push(self.data[(x - half_w) as usize][y as usize]);
@@ -236,7 +237,7 @@ impl Runner {
         (x == 0.0 && y == 0.0) || (x == 0.0 && y == p) || (x == p && y == 0.0) || (x == p && y == p)
     }
 
-    fn randomize(&mut self, base: f32, range: f32, rng: &mut impl rand::Rng) -> f32 {
+    fn randomize(&mut self, base: f32, range: f32, rng: &mut impl Rng) -> f32 {
         let r: f32 = rng.gen();
 
         base + (r - base / self.depth) * range * self.rough
