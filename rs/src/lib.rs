@@ -7,7 +7,7 @@
 //!
 //! fn main() {
 //!     let mut runner = Runner::new();
-//!     let output = runner.ds(&mut rand::thread_rng());
+//!     let output = runner.ds();
 //!
 //!     println!("data: {:?}", output.data);
 //!     println!("max: {}", output.max);
@@ -86,7 +86,7 @@ impl Runner {
 
     #[wasm_bindgen(js_name = ds)]
     pub fn wasm_ds(&mut self) -> Result<Object, JsValue> {
-        let output = self.ds(&mut rand::thread_rng());
+        let output = self.ds();
 
         let data = Array::from(&JsValue::from(
             output
@@ -125,9 +125,13 @@ impl Runner {
         runner.set_height(DEFAULT_HEIGHT);
         runner
     }
+    /// Run the Diamond-square algorithm with a default rng.
+    pub fn ds(&mut self) -> Output {
+        self.ds_with_rng(&mut rand::thread_rng())
+    }
 
-    /// Run the Diamond-square algorithm.
-    pub fn ds(&mut self, rng: &mut impl rand::Rng) -> Output {
+    /// Run the Diamond-square algorithm with given rng.
+    pub fn ds_with_rng(&mut self, rng: &mut impl rand::Rng) -> Output {
         let beta = Beta::new(3.0, 3.0).unwrap();
         let p = self.side - 1;
         self.data[0][0] = beta.sample(rng) * self.depth;
