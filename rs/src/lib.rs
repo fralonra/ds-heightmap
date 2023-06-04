@@ -229,7 +229,7 @@ impl Runner {
             }
         }
 
-        self.data[(x as usize)][(y as usize)] = n;
+        self.data[x as usize][y as usize] = n;
     }
 
     fn is_corner(&self, x: f32, y: f32) -> bool {
@@ -312,6 +312,6 @@ impl Runner {
             }
         }
 
-        self.data[(x as usize)][(y as usize)] = n;
+        self.data[x as usize][y as usize] = n;
     }
 }
