@@ -1,6 +1,8 @@
 name: Build Demo and Deploy to Github Pages
 
-on: [push]
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
 
 jobs:
   build-and-deploy:
