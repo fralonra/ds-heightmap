@@ -13,7 +13,8 @@
     "wasm"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:ts && npm run build:wasm",
+    "build:ts": "tsc",
     "build:wasm": "cd rs && wasm-pack build --release --out-dir ../wasm && rm ../wasm/.gitignore",
     "build:watch": "tsc --watch",
     "lint": "tsc --noEmit --noUnusedLocals true --noUnusedParameters true",
