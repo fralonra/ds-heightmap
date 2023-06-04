@@ -1,19 +1,4 @@
-//! Using [diamond-square algorithm](https://en.wikipedia.org/wiki/Diamond-square_algorithm) to generate heightmaps which stored in a 2D-array.
-//!
-//! ## Usage
-//!
-//! ```rust
-//! use ds_heightmap::Runner;
-//!
-//! fn main() {
-//!     let mut runner = Runner::new();
-//!     let output = runner.ds();
-//!
-//!     println!("data: {:?}", output.data);
-//!     println!("max: {}", output.max);
-//!     println!("min: {}", output.min);
-//! }
-//! ```
+#![doc = include_str!("../README.md")]
 
 #[cfg(target_arch = "wasm32")]
 use js_sys::{Array, Object, Reflect};
