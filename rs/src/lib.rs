@@ -127,6 +127,7 @@ impl Runner {
     }
 
     /// Run the Diamond-square algorithm with a default rng.
+    /// Use [rand::rngs::ThreadRng](https://rust-random.github.io/rand/rand/rngs/struct.ThreadRng.html) internally.
     pub fn ds(&mut self) -> Output {
         self.ds_with_rng(&mut rand::thread_rng())
     }
