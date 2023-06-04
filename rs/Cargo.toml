@@ -8,7 +8,7 @@ license = "MIT"
 name = "ds-heightmap"
 readme = "README.md"
 repository = "https://github.com/fralonra/ds-heightmap"
-version = "0.1.2"
+version = "0.2.0"
 
 [lib]
 crate-type = ["cdylib", "lib"]
@@ -18,7 +18,7 @@ rand = "0.8"
 rand_distr = "0.4"
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-getrandom = {version = "0.2", features = ["js"]}
+getrandom = { version = "0.2", features = ["js"] }
 js-sys = "0.3"
 wasm-bindgen = "0.2"
 wee_alloc = "0.4"
